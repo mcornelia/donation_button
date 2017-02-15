@@ -1,15 +1,19 @@
 #!/usr/bin/env python
 
-# lambda_function version 0.1
+# lambda_function for ACLU Dash Button version 0.1
 # 15.FEB.2017
-# 
+# https://github.com/mcornelia/donation_button
 # Original idea & script by Nathan Pryor https://github.com/nathanpryor
 # And this version forked by Mike Cornelia <mike.cornelia@gmail.com>
-# 
 
 # This is a simple python script that sends $$$ to the ACLU
 # It runs on Amazon's AWS Lambda service 
 # See more here: https://aws.amazon.com/lambda/
+# 
+# It is intended to be triggered by Amazon's IoT ('Dash') button
+# Order a version 2 of the button here: http://amzn.to/2lhUiMK
+# And learn more about it here: https://aws.amazon.com/iotbutton/
+# 
 # This script also uses Amazon's AWS SNS service to send confirmations via text message
 # see https://aws.amazon.com/sns/ for setup and details
 
@@ -28,7 +32,7 @@ import os
 
 first_name='Jane' 
 last_name='Doe'
-e_mail='janedoe+IoTbutton@gmail.com'
+e_mail='janedoe+IoTbutton@gmail.com' # Love usiung Gmail's 'plus' feature for things like this
 street_address='123 Main ST'
 city='Some City'
 state_code='44' # see http://bit.ly/2l7I5HP
@@ -88,7 +92,7 @@ def lambda_handler(event, context):
 
     response = br.submit()
     if "Thank You" in response.read():
-         message = '$5 donated to the ACLU!'
+         message = '$'donation_amount 'donated to the ACLU!'
     else:
          message = 'Error: no donation occurred'
     sns.publish(PhoneNumber=phone_number, Message=message)
